@@ -1,0 +1,48 @@
+﻿@model UserModel
+@{
+
+}
+<div class="container">
+	<div class="container-md-12">
+		<row>
+			<p class="h3 text-info">Hello @User.Identity.Name</p>
+		</row>
+	</div>
+
+	<div class="container-md-12">
+		<row>
+			<p class="h2 text-success">Here is your analyzes!</p>
+		</row>
+	</div>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Jobs</th>
+				<th scope="col">Status</th>
+				<th scope="col">Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (int i = 0; i < Model.Jobs.Count; i++)
+			{
+				<tr>
+					<th scope="row">@i.ToString()</th>
+					<td>@Model.Jobs[i].Job</td>
+					@if (Model.Jobs[i].Status == 0)
+					{
+						<td class="bg-warning">Under Progress!</td>
+					}
+					else
+					{
+						<td class="bg-success">Done!</td>
+					}
+
+					<td>@Model.Jobs[i].Time</td>
+				</tr>
+			}
+		</tbody>
+
+	</table>
+</div>

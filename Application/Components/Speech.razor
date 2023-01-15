@@ -1,0 +1,63 @@
+﻿@using Microsoft.CognitiveServices.Speech;
+@using Microsoft.CognitiveServices.Speech.Audio;
+@using Microsoft.CognitiveServices.Speech.Translation;
+
+<div class="container">
+    <div class="container-md">
+        <div class="col-md-12">
+            <p>
+                <input type="text" class="form-control text-bg-warning" @bind="InputValue" />
+            </p>
+        </div>
+        <div class="col-md-12">
+            <p>
+                <button class="btn btn-primary" @onclick="Click_ReadMyVoice">Listen My Voice</button>
+            </p>
+        </div>
+        <div class="col-md-12">
+            <form class="row g-3" method="post">
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@code {
+    static string buttonTitle { get; set; } = "Read My Voice";
+    static string? InputValue { get; set; }
+    async Task Click_ReadMyVoice()
+    {
+        var speechConfig = SpeechConfig.FromSubscription("007539d66b3246cd979ed553533745b9", "westeurope");
+        speechConfig.SpeechRecognitionLanguage = "en-US";
+
+        using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+        using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
+        var speechRecognitionResult = await speechRecognizer.RecognizeOnceAsync();
+        OutputSpeechRecognitionResult(speechRecognitionResult);
+    }
+    static void OutputSpeechRecognitionResult(SpeechRecognitionResult speechRecognitionResult)
+    {
+        switch (speechRecognitionResult.Reason)
+        {
+            case ResultReason.RecognizedSpeech:
+                InputValue = speechRecognitionResult.Text;
+                buttonTitle = "Retry!";
+                break;
+            case ResultReason.NoMatch:
+                InputValue = "NOMATCH: Speech could not be recognized";
+                break;
+            case ResultReason.Canceled:
+                var cancellation = CancellationDetails.FromResult(speechRecognitionResult);
+                InputValue = "CANCELED: Reason=" + cancellation.Reason;
+                if (cancellation.Reason == CancellationReason.Error)
+                {
+                    Console.WriteLine($"CANCELED: ErrorCode={cancellation.ErrorCode}");
+                    Console.WriteLine($"CANCELED: ErrorDetails={cancellation.ErrorDetails}");
+                    Console.WriteLine($"CANCELED: Double check the speech resource key and region.");
+                }
+                break;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+﻿@model SigninModel
+
+@if (!String.IsNullOrEmpty(ViewBag.Result))
+{
+	<p class="h5 text-bg-danger">Username or password is incorrent!</p>
+}
+
+<form class="row g-3 needs-validation" method="post">
+	<div class="col-md-4">
+		<label asp-for="Username" class="form-label">Username</label>
+		<input asp-for="Username" type="text" class="form-control" id="Username">
+		<span asp-validation-for="Username" class="text-danger"></span>
+	</div>
+	<div class="col-md-4">
+		<label asp-for="Password" class="form-label">Password</label>
+		<input asp-for="Password" type="password" class="form-control" id="Password">
+		<span asp-validation-for="Password" class="text-danger"></span>
+	</div>
+	<div class="col-12">
+		<button class="btn btn-primary" type="submit">Sign In</button>
+	</div>
+</form>

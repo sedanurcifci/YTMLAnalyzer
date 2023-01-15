@@ -1,0 +1,74 @@
+﻿<nav class="navbar navbar-expand-lg bg-light rounded" aria-label="nav bar">
+        <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" aria-controls="mainNavBar" aria-expanded="false" aria-label="Toggle navigation"
+                onclick="location.href='@Url.Action("Index", "Home")'">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        <div class="collapse navbar-collapse d-lg-flex" id="mainNavBar">
+            <a class="navbar-brand col-lg-3 me-0" href="#">Youtube ML Analyzer</a>
+                <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index","Home")" >Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Privacy</a>
+                </li>
+                    </ul>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="d-lg-flex col-lg-3 justify-content-end">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="text-success">Welcome @User.Identity.Name</p>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Index", "Admin")'">Admin Panel</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Signout")'">Signout</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-lg-flex col-lg-3 justify-content-end">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <p class="text-success">Welcome @User.Identity.Name</p>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Index", "User")'">User Panel</button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Signout")'">Signout</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="d-lg-flex col-lg-3 justify-content-end">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Signin")'">SignIn</button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Signup")'">Signup</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </nav>

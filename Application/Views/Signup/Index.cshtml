@@ -1,0 +1,51 @@
+﻿@model SignupModel
+
+@if(ViewBag.Register == false)
+{
+	@if (ViewBag.Result == "-1")
+	{
+		<p class="h5 text-danger"> Please use different USERNAME!</p>
+	}
+	else if(ViewBag.Result == "-2")
+	{
+		<p class="h5 text-danger"> Please use different EMAIL Address</p>
+	}
+	<form class="row g-3 needs-validation" method="post">
+		<div class="col-md-4">
+			<label asp-for="Username" class="form-label">Username</label>
+			<input asp-for="Username" type="text" class="form-control" id="Username">
+			<span asp-validation-for="Username" class="text-danger"></span>
+		</div>
+		<div class="col-md-4">
+			<label asp-for="EMail" class="form-label">E-Mail</label>
+			<input asp-for="EMail" type="email" class="form-control" id="EMail" placeholder="name@company.com">
+			<span asp-validation-for="EMail" class="text-danger"></span>
+		</div>
+		<div class="col-md-4">
+			<label asp-for="Password" class="form-label">Password</label>
+			<input asp-for="Password" type="password" class="form-control" id="Password">
+			<span asp-validation-for="Password" class="text-danger"></span>
+		</div>
+		<div class="col-12">
+			<div class="form-check">
+				<input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+				<label class="form-check-label" for="invalidCheck">
+					Agree to terms and conditions
+				</label>
+				<div class="invalid-feedback">
+					You must agree before submitting.
+				</div>
+			</div>
+		</div>
+		<div class="col-12">
+			<button class="btn btn-primary" type="submit">Submit form</button>
+		</div>
+	</form>
+}
+else
+{
+	<p class="h5 text-bg-success">Registeration is done! Please SIGNIN the service!</p>
+	<div class="col-12">
+		<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Signin")'">SIGNIN</button>
+	</div>
+}

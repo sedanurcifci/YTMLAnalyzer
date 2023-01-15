@@ -1,0 +1,19 @@
+﻿@model HomeModel
+@using Application.ClientLogic;
+@using Application.Components;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <form class="row g-3" method="post">
+	<div class="col-md-12">
+		<label asp-for="Job" class="form-label">Job Text</label>
+		<input asp-for="Job" type="text" class="form-control">
+	</div>
+	<div class="col-12">
+		<button class="btn btn-primary" type="submit">Analze It</button>
+	</div>
+</form>      
+}
